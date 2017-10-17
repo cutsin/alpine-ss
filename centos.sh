@@ -11,3 +11,7 @@ yum install shadowsocks-libev
 # vi /etc/shadowsocks-libev/config.json
 systemctl start shadowsocks-libev
 systemctl disable firewalld
+
+# 
+echo 'fs.file-max = 6553560' > /etc/sysctl.conf
+echo '* soft nofile 65535\n* hard nofile 65535\n* soft nproc 65535\n* hard nproc 65535' > /etc/security/limits.conf
