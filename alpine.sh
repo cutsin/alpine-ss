@@ -1,14 +1,23 @@
 #!/bin/bash
+
+# Network
+echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "hostname" > /etc/hostname
 hostname -F /etc/hostname
 echo -e "nameserver 8.8.8.8\nnameserver 114.114.114.114" > /etc/resolv.conf
 echo -e "auto lo\niface lo inet loopback\nauto eth0\niface eth0 inet dhcp" > /etc/network/interfaces
 service networking start
+# Firewall
+apk add iptalbes
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p udp --dport 443 -j ACCEPT
+# Repositories
+echo "http://dl-3.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
 
 # bbr
 echo -e "net.core.default_qdisc=fq\nnet.ipv4.tcp_congestion_control=bbr" > /etc/sysctl.conf
 sysctl -p
-echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 
 # ss
 SS_VER="3.0.8"
