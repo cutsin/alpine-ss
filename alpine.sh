@@ -16,10 +16,16 @@ wget -P /etc/apk/keys https://alpine-repo.sourceforge.io/DDoSolitary@gmail.com-0
 
 # Firewall
 apk add iptables ca-certificates libressl
+iptables -F
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -p udp --dport 443 -j ACCEPT
-/etc/init.d/iptables save
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+service iptables save
 service iptables start
 
 # bbr
