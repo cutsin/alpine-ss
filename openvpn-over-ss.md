@@ -1,6 +1,6 @@
 #
 
-1. Open your .ovpn file
+1. Open your .ovpn file (OSX: `/Library/Application Support/OpenVPN/profile/`; Windows: `C:\Program Files (x86)\OpenVPN Technologies\OpenVPN Client\etc\profile`)
 2. Add 2 lines:
 
 ```
