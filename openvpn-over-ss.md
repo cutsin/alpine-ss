@@ -1,6 +1,10 @@
 #
 
-1. Open your .ovpn file (OSX: `/Library/Application Support/OpenVPN/profile/`; Windows: `C:\Program Files (x86)\OpenVPN Technologies\OpenVPN Client\etc\profile`)
+1. Open your .ovpn file, find path:
+
+    * OSX: `/Library/Application Support/OpenVPN/profile/`;
+    * Windows: `C:\Program Files (x86)\OpenVPN Technologies\OpenVPN Client\etc\profile`, you must replace all `\n\n` to '\n' first.
+
 2. Add 2 lines:
 
 ```
