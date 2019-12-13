@@ -37,6 +37,7 @@ sysctl -p
 # ss
 apk add shadowsocks-libev simple-obfs
 
+# auto launch
 rc-update add shadowsocks-server
 rc-update add nginx
 
@@ -46,3 +47,8 @@ export CF_Key="abcadfasde" # Cloudflase api key
 acme.sh --issue --dns dns_cf -d your.domain
 acme.sh --upgrade --auto-upgrade
 acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "rc-service nginx restart"
+
+# v2ray-plugin
+cd /tmp && wget https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.2.0/v2ray-plugin-linux-amd64-v1.2.0.tar.gz
+tar -xvzf v2ray-plugin-linux-amd64-v1.2.0.tar.gz -C ./
+mv ./v2ray-plugin_linux_amd64 /usr/local/bin/v2ray-plugin
