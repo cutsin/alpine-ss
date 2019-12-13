@@ -39,3 +39,10 @@ apk add shadowsocks-libev simple-obfs
 
 rc-update add shadowsocks-server
 rc-update add nginx
+
+# install ssl
+export CF_Email="a@b.com" # Cloudflare login email
+export CF_Key="abcadfasde" # Cloudflase api key
+acme.sh --issue --dns dns_cf -d your.domain
+acme.sh --upgrade --auto-upgrade
+acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "rc-service nginx restart"
