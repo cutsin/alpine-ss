@@ -52,3 +52,32 @@ acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key -
 cd /tmp && wget https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.2.0/v2ray-plugin-linux-amd64-v1.2.0.tar.gz
 tar -xvzf v2ray-plugin-linux-amd64-v1.2.0.tar.gz -C ./
 mv ./v2ray-plugin_linux_amd64 /usr/local/bin/v2ray-plugin
+
+###
+
+# Alpine Trojan
+
+# 1. Domain & cloudfare api
+acme.sh --issue --dns dns_cf -d your.domain
+acme.sh --upgrade --auto-upgrade
+acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "reboot"
+
+echo 'export CF_Email="a@b.com"\nexport CF_Key="abcadfasde"' >> /etc/profile
+source /etc/profile
+
+# 2. Build
+apk add --no-cache git build-base make cmake boost-dev openssl-dev mariadb-connector-c-dev
+git clone --branch v1.14.1 --single-branch https://github.com/trojan-gfw/trojan.git
+cd trojan
+cmake .
+make
+strip -s trojan
+
+# 3. Run
+apk add --no-cache tzdata ca-certificates libstdc++ boost-system boost-program_options mariadb-connector-c
+cp /root/trojan/trojan /usr/bin
+touch /usr/local/etc/trojan/config.json
+## 
+echo 'trojan' >> /etc/local.d/trojan.start
+chmod +x /etc/local.d/trojan.start
+rc-update add local
