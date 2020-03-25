@@ -67,7 +67,7 @@ source /etc/profile
 
 # 2. Build
 apk add --no-cache git build-base make cmake boost-dev openssl-dev mariadb-connector-c-dev
-git clone --branch v1.14.1 --single-branch https://github.com/trojan-gfw/trojan.git
+git clone --branch v1.15.1 --single-branch https://github.com/trojan-gfw/trojan.git
 cd trojan
 cmake .
 make
