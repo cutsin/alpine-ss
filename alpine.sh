@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Setup from ISO or manually
 # Network
 echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
 echo "hostname" > /etc/hostname
