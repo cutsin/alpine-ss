@@ -61,7 +61,7 @@ mv ./v2ray-plugin_linux_amd64 /usr/local/bin/v2ray-plugin
 # 1. Domain & cloudfare api
 acme.sh --issue --dns dns_cf -d your.domain
 acme.sh --upgrade --auto-upgrade
-acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "reboot"
+acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "reboot -f"
 
 echo 'export CF_Email="a@b.com"\nexport CF_Key="abcadfasde"' >> /etc/profile
 source /etc/profile
