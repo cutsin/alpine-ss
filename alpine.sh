@@ -59,6 +59,7 @@ mv ./v2ray-plugin_linux_amd64 /usr/local/bin/v2ray-plugin
 # Alpine Trojan
 
 # 1. Domain & cloudfare api
+apk add openssl --no-cache
 acme.sh --issue --dns dns_cf -d your.domain
 acme.sh --upgrade --auto-upgrade
 acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "sudo reboot -f"
