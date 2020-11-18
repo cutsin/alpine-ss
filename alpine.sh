@@ -94,3 +94,20 @@ mkdir -p /srv/trojan-go
 wget -qP /srv/trojan-go https://github.com/p4gefau1t/trojan-go/releases/download/v0.8.2/trojan-go-linux-armv8.zip
 unzip trojan-go-linux-armv8.zip -d /srv/trojan-go
 
+## auto start
+vi /etc/init.d/trojan-go
+```sh
+#!/sbin/openrc-run
+
+cfgfile=${cfgfile:-/srv/trojan-go.config.json}
+pidfile="/run/$RC_SVCNAME.pid"
+command=${command:-/srv/trojan-go/trojan-go}
+command_args="-config $cfgfile"
+required_files="$cfgfile"
+
+depend() {
+  need net
+  use dns logger netmount
+}
+```
+chmod 755 /etc/init.d/trojan-go
