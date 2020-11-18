@@ -87,3 +87,10 @@ touch /usr/local/etc/trojan/config.json
 echo -e 'trojan' >> /etc/local.d/trojan.start
 chmod +x /etc/local.d/trojan.start
 rc-update add local
+
+
+# Trojan-go
+mkdir -p /srv/trojan-go
+wget -qP /srv/trojan-go https://github.com/p4gefau1t/trojan-go/releases/download/v0.8.2/trojan-go-linux-armv8.zip
+unzip trojan-go-linux-armv8.zip -d /srv/trojan-go
+
