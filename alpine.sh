@@ -45,6 +45,8 @@ rc-update add nginx
 # install ssl
 export CF_Email="a@b.com" # Cloudflare login email
 export CF_Key="abcadfasde" # Cloudflase api key
+wget -O - https://get.acme.sh | sh
+alias acme.sh=~/.acme.sh/acme.sh
 acme.sh --issue --dns dns_cf -d your.domain
 acme.sh --upgrade --auto-upgrade
 acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "rc-service nginx restart"
@@ -80,6 +82,6 @@ apk add --no-cache tzdata ca-certificates libstdc++ boost-system boost-program_o
 cp /root/trojan/trojan /usr/bin
 touch /usr/local/etc/trojan/config.json
 ## 
-echo 'trojan' >> /etc/local.d/trojan.start
+echo -e 'alias acme.sh=~/.acme.sh/acme.sh\ntrojan' >> /etc/local.d/trojan.start
 chmod +x /etc/local.d/trojan.start
 rc-update add local
