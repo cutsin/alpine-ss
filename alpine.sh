@@ -43,10 +43,10 @@ rc-update add shadowsocks-server
 rc-update add nginx
 
 # install ssl
+apk add openssl acme.sh --no-cache
 export CF_Email="a@b.com" # Cloudflare login email
 export CF_Key="abcadfasde" # Cloudflase api key
-wget -O - https://get.acme.sh | sh
-echo  'export alias acme.sh=~/.acme.sh/acme.sh' >> /etc/profile
+echo -e  'export CF_Email="a@b.com"\nexport CF_Key="abcadfasde"' >> /etc/profile
 source /etc/profile
 acme.sh --issue --dns dns_cf -d your.domain
 acme.sh --upgrade --auto-upgrade
@@ -62,13 +62,14 @@ mv ./v2ray-plugin_linux_amd64 /usr/local/bin/v2ray-plugin
 # Alpine Trojan
 
 # 1. Domain & cloudfare api
-apk add openssl --no-cache
+apk add openssl acme.sh --no-cache
+export CF_Email="a@b.com" # Cloudflare login email
+export CF_Key="abcadfasde" # Cloudflase api key
+echo -e  'export CF_Email="a@b.com"\nexport CF_Key="abcadfasde"' >> /etc/profile
+source /etc/profile
 acme.sh --issue --dns dns_cf -d your.domain
 acme.sh --upgrade --auto-upgrade
-acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "sudo reboot -f"
-
-echo -e 'export CF_Email="a@b.com"\nexport CF_Key="abcadfasde"' >> /etc/profile
-source /etc/profile
+acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "reboot"
 
 # 2. Build
 apk add --no-cache git build-base make cmake boost-dev openssl-dev mariadb-connector-c-dev
@@ -83,6 +84,6 @@ apk add --no-cache tzdata ca-certificates libstdc++ boost-system boost-program_o
 cp /root/trojan/trojan /usr/bin
 touch /usr/local/etc/trojan/config.json
 ## 
-echo -e 'source /etc/profile\ntrojan' >> /etc/local.d/trojan.start
+echo -e 'trojan' >> /etc/local.d/trojan.start
 chmod +x /etc/local.d/trojan.start
 rc-update add local
