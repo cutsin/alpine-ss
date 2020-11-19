@@ -111,3 +111,72 @@ depend() {
 }
 ```
 chmod 755 /etc/init.d/trojan-go
+
+
+## nginx.conf
+```
+user nginx;
+worker_processes auto;
+pcre_jit on;
+error_log /var/log/nginx/error.log warn;
+include /etc/nginx/modules/*.conf;
+events {
+        worker_connections 1024;
+}
+
+http {
+        map $http_upgrade $connection_upgrade {
+                '' close;
+                default upgrade;
+        }
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        server_tokens off;
+        client_max_body_size 1m;
+        keepalive_timeout 65;
+        sendfile on;
+        tcp_nodelay on;
+        ssl_prefer_server_ciphers on;
+        ssl_session_cache shared:SSL:2m;
+        #limit_conn_zone $binary_remote_addr zone=one:10m;
+        #limit_req_zone $binary_remote_addr zone=allips:10m rate=5r/s;
+        gzip on;
+        gzip_vary on;
+        gzip_static on;
+        log_format main '$remote_addr - $remote_user [$time_local] "$request" '
+                        '$status $body_bytes_sent "$http_referer" '
+                        '"$http_user_agent" "$http_x_forwarded_for"';
+        access_log /var/log/nginx/access.log main;
+        include /etc/nginx/conf.d/*.conf;
+}
+```
+
+### nginx/conf.d/default.conf
+```
+geo $domain {
+        default your.domain;
+}
+#proxy_cache_path /data/nginx/cache keys_zone=mycache:100m;
+server {
+        listen 80;
+        listen 81 http2;
+        server_name $domain;
+        #limit_conn one 2;
+        #limit_rate 5m;
+        #limit_req zone=allips burst=5 nodelay;
+        location = / {
+        #       proxy_cache mycache;
+                proxy_pass https://abc.com;
+        }
+        location / {
+                #proxy_cache mycache;
+                proxy_pass https://abc.com;
+        }
+}
+server {
+        listen 80;
+        listen [::]:80;
+        server_name _;
+        return 301 https://$domain$request_uri;
+}
+```
