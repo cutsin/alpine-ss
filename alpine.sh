@@ -111,6 +111,10 @@ depend() {
 }
 ```
 chmod 755 /etc/init.d/trojan-go
+# export local env
+echo -e 'source /etc/profile\nacme.sh --upgrade --auto-upgrade --force' >> /etc/local.d/trojan.start
+chmod +x /etc/local.d/trojan.start
+rc-update add local
 
 
 ## nginx.conf
