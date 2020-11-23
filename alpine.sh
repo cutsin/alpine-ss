@@ -31,7 +31,7 @@ apk add ca-certificates libressl
 #service iptables save
 #service iptables start
 
-# bbr
+# bbr (arm os maybe has some problem)
 echo -e "net.core.default_qdisc=fq\nnet.ipv4.tcp_congestion_control=bbr" > /etc/sysctl.conf
 sysctl -p
 
@@ -67,9 +67,9 @@ export CF_Email="a@b.com" # Cloudflare login email
 export CF_Key="abcadfasde" # Cloudflase api key
 echo -e  'export CF_Email="a@b.com"\nexport CF_Key="abcadfasde"' >> /etc/profile
 source /etc/profile
-acme.sh --issue --dns dns_cf -d your.domain
-acme.sh --upgrade --auto-upgrade
-acme.sh --installcert -d your.domain --key-file /etc/nginx/ssl/your.domain.key --fullchain-file /etc/nginx/ssl/fullchain.cer --reloadcmd  "reboot"
+acme.sh --issue --dns dns_cf -d yourdomain --keylength ec-256 --force
+acme.sh --upgrade --auto-upgrade --force
+acme.sh --installcert -d yourdomain --cert-file /etc/nginx/ssl/cert --key-file /etc/nginx/ssl/key --ca-file /etc/nginx/ssl/ca --fullchain-file /etc/nginx/ssl/fullchain --reloadcmd "reboot" --ecc --force
 
 # 2. Build
 apk add --no-cache git build-base make cmake boost-dev openssl-dev mariadb-connector-c-dev
