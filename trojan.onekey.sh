@@ -9,7 +9,7 @@ do
     m) CFEMAIL=$OPTARG;;
     k) CFKEY=$OPTARG;;
     d) YOURDOMAIN=$OPTARG;;
-    p) PWD=$OPTARG;;
+    p) PASSWD=$OPTARG;;
     x) PROXYROOT=$OPTARG;;
     y) PROXYROOT2=$OPTARG;;
     [?])
@@ -49,7 +49,7 @@ cat>/srv/trojan.config.json<<EOF
   "remote_addr": "127.0.0.1",
   "remote_port": 80,
   "password": [
-    "${PWD}"
+    "${PASSWD}"
   ],
   "log_level": 2,
   "ssl": {
