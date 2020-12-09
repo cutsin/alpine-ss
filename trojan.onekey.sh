@@ -1,6 +1,6 @@
 # How to use
 # sudo -i
-# wget -O -  https://raw.githubusercontent.com/cutsin/alpine-ss/master/alpine.onekey.sh | sh -m a@b.com -k cfkey -d abc.com -p mypwd -x https://www.google.com -y https://www.google.com
+# wget -O -  https://raw.githubusercontent.com/cutsin/alpine-ss/master/trojan.onekey.sh | sh -m a@b.com -k cfkey -d abc.com -p mypwd -x https://www.google.com -y https://www.google.com
 
 # Get Command Options
 while getopts ':m:k:d:p:x:y:' opt
