@@ -168,7 +168,7 @@ EOF
 apk add openssl acme.sh --no-cache
 export CF_Email=$CFEMAIL
 export CF_Key=$CFKEY
-echo -e 'export CF_Email=$CF_Email\nexport CF_Key=$CF_Key' >> /etc/profile
+echo -e "export CF_Email=$CFEMAIL\nexport CF_Key=$CFKEY" >> /etc/profile
 source /etc/profile
 
 ## ENV
