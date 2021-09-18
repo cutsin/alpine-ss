@@ -1,3 +1,4 @@
+#!/bin/sh
 # How to use
 # sudo -i
 # wget -O -  https://raw.githubusercontent.com/cutsin/alpine-ss/master/trojan.onekey.sh | sh -m a@b.com -k cfkey -d abc.com -p mypwd -x https://www.google.com -y https://www.google.com
