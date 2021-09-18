@@ -183,4 +183,4 @@ rc-update add local
 mkdir /srv/ssl
 acme.sh --issue --dns dns_cf -d $YOURDOMAIN --keylength ec-256 --force
 acme.sh --upgrade --auto-upgrade --force
-acme.sh --installcert -d $YOURDOMAIN --cert-file /srv/ssl/cert --key-file /srv/ssl/key --ca-file /srv/ssl/ca --fullchain-file /srv/ssl/fullchain --reloadcmd "nginx -s reload" --ecc --force
+acme.sh --installcert -d $YOURDOMAIN --cert-file /srv/ssl/cert --key-file /srv/ssl/key --ca-file /srv/ssl/ca --fullchain-file /srv/ssl/fullchain --reloadcmd "rc-service nginx restart" --ecc --force
