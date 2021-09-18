@@ -184,3 +184,11 @@ mkdir /srv/ssl
 acme.sh --issue --dns dns_cf -d $YOURDOMAIN --keylength ec-256 --force
 acme.sh --upgrade --auto-upgrade --force
 acme.sh --installcert -d $YOURDOMAIN --cert-file /srv/ssl/cert --key-file /srv/ssl/key --ca-file /srv/ssl/ca --fullchain-file /srv/ssl/fullchain --reloadcmd "rc-service trojan restart && rc-service nginx restart" --ecc --force
+
+## Re-issue cert monthly
+cat>/etc/periodic/monthly/reverify<<EOF
+#!/bin/sh
+acme.sh --issue --dns dns_cf -d ${YOURDOMAIN} --keylength ec-256 --force
+acme.sh --installcert -d ${YOURDOMAIN} --cert-file /srv/ssl/cert --key-file /srv/ssl/key --ca-file /srv/ssl/ca --fullchain-file /srv/ssl/fullchain --reloadcmd "rc-service trojan restart && rc-service nginx restart" --ecc --force
+EOF
+chmod 755 /etc/periodic/monthly/reverify
