@@ -1,7 +1,7 @@
 #!/bin/sh
 # How to use
 # sudo -i
-# wget -O -  https://raw.githubusercontent.com/cutsin/alpine-ss/master/trojan.onekey.sh | sh -m a@b.com -k cfkey -d abc.com -p mypwd -x https://www.google.com -y https://www.google.com
+# wget -O -  https://raw.githubusercontent.com/cutsin/alpine-ss/master/trojan.onekey | sh -m a@b.com -k cfkey -d abc.com -p mypwd -x https://www.google.com -y https://www.google.com
 
 # Get Command Options
 while getopts ':m:k:d:p:x:y:' opt
@@ -24,6 +24,7 @@ done
 ## Fastopen
 sysctl -w net.ipv4.tcp_congestion_control=hybla
 sysctl -w net.ipv4.tcp_fastopen=3
+ulimit -Hn 524288
 
 ## BBR
 echo -e "net.core.default_qdisc=fq\nnet.ipv4.tcp_congestion_control=bbr" > /etc/sysctl.conf
@@ -191,3 +192,14 @@ acme.sh --installcert -d ${YOURDOMAIN} --cert-file /srv/ssl/cert --key-file /srv
 EOF
 chmod 755 /etc/periodic/monthly/reverify
 run-parts /etc/periodic/monthly
+
+## Restart on crashed
+cat>/etc/periodic/15min/restart<<EOF
+#!/bin/sh
+if
+  rc-service trojan status | tail -1 | grep 'crashed'
+then
+  rc-service trojan restart
+fi
+EOF
+chmod 755 /etc/periodic/15min/restart
