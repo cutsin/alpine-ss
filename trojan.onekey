@@ -196,9 +196,6 @@ run-parts /etc/periodic/monthly
 ## Restart on crashed
 cat>/etc/periodic/15min/restart<<EOF
 #!/bin/sh
-stat=`rc-service trojan status | tail -1 | grep 'crashed'`
-if [ "$stat" ]; then
-  rc-service trojan restart
-fi
+rc-service -c trojan restart
 EOF
 chmod 755 /etc/periodic/15min/restart
