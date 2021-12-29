@@ -104,7 +104,7 @@ User=trojan
 ExecStart=/usr/bin/trojan --config /srv/trojan.config.json
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
-RestartSec=3s
+RestartSec=30s
 
 [Install]
 WantedBy=multi-user.target
