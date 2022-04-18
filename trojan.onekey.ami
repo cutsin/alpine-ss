@@ -40,7 +40,7 @@ cp ./trojan/trojan /usr/bin/
 # yum install tzdata ca-certificates libstdc++ boost-system
 
 ## config file
-mkdir -p /srv/ssl
+mkdir -p /srv/ssl && mkdir -p /srv/web-app
 cat>/srv/trojan.config.json<<EOF
 {
   "run_type": "server",
