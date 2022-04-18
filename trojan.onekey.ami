@@ -114,7 +114,7 @@ systemctl enable trojan
 systemctl daemon-reload
 
 # Nginx
-yum install -y nginx
+ amazon-linux-extras install nginx1 -y
 systemctl enable nginx
 ## conf
 cat>/etc/nginx/nginx.conf<<EOF
